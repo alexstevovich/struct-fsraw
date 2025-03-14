@@ -1,0 +1,64 @@
+{
+    "name": "struct-fsraw",
+    "version": "1.0.0",
+    "description": "Retrieves a structured representation of a directory, including file metadata, file size, symlinks.",
+    "type": "module",
+    "main": "./gen/index.cjs",
+    "exports": {
+        "import": "./src/index.js",
+        "require": "./gen/index.cjs"
+    },
+    "types": "./index.d.ts",
+    "files": [
+        "./src/",
+        "./gen"
+    ],
+    "license": "Apache-2.0",
+    "author": {
+        "name": "Alex Stevovich",
+        "email": "alex.stevovich@gmail.com",
+        "url": "https://alexstevovich.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/alexstevovich/struct-fsraw.git"
+    },
+    "scripts": {
+        "test": "vitest",
+        "preamble": "preamble --apply --dir ./src/",
+        "zord": "filezord --zord --dir ./ --id pkg:struct-fsraw",
+        "pretty": "npx prettier --write .",
+        "lint": "eslint ./src/",
+        "lint:fix": "eslint --fix ./src/",
+        "build": "npm run preamble && npm run pretty && npm run lint:fix && node build.js && preamble --apply --dir ./gen/  && npm run zord"
+    },
+    "keywords": [
+        "filesystem",
+        "fs",
+        "file-structure",
+        "directory-structure",
+        "recursive-directory",
+        "filetree",
+        "nodejs-fs",
+        "fs-structure",
+        "directory-scanner",
+        "file-metadata",
+        "file-system-utility",
+        "symlink",
+        "symlink-resolution",
+        "fs-promise",
+        "async-fs",
+        "nodejs",
+        "filesystem-parser",
+        "file-utilities"
+    ],
+    "devDependencies": {
+        "@eslint/js": "^9.22.0",
+        "eslint": "^9.21.0",
+        "eslint-plugin-prettier": "^5.2.3",
+        "markdownlint": "^0.37.4",
+        "markdownlint-cli": "^0.44.0",
+        "prettier": "^3.5.3",
+        "vitest": "^3.0.8"
+    }
+}
