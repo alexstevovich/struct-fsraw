@@ -4,8 +4,6 @@
 
 Filesystem Structure Extraction for Node.js
 
-**Archtype**: Node.js package
-
 **struct-fsraw** retrieves a structured representation of a directory, including file metadata, file size, symlinks.
 
 ## Details
