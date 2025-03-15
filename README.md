@@ -25,9 +25,9 @@ npm install struct-fsraw
 ### Basic Example
 
 ```js
-import structFsRaw from 'struct-fsraw';
+import struct from 'struct-fsraw';
 
-const structure = await structFsRaw('./my-directory');
+const structure = await struct('./my-directory');
 console.log(JSON.stringify(structure, null, 2));
 ```
 
@@ -51,11 +51,11 @@ console.log(JSON.stringify(structure, null, 2));
 ### Advanced Example
 
 ```js
-import { structFsRaw, getKeys } from 'struct-fsraw';
+import { struct, getKeys } from 'struct-fsraw';
 
 const keyMapping = getKeys(); // Retrieve the default compact key mapping
 
-const fileTree = await structFsRaw('./path/to/directory', {
+const fileTree = await struct('./path/to/directory', {
     meta: true, // Include creation and modification times
     size: true, // Include file sizes
     recursive: true, // Recursively scan directories (default)
@@ -68,7 +68,7 @@ console.log(JSON.stringify(fileTree, null, 2));
 
 ## ⚙️ API Reference
 
-### `structFsRaw(dir, options = {})`
+### `struct(dir, options = {})`
 
 Scans a directory and returns its structured representation.
 

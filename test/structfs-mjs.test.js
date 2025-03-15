@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import fs from 'fs';
 import path from 'path';
-import { structFsRaw, getKeys } from '../src/index.js';
+import { struct, getKeys } from '../src/index.js';
 
 // Symlink path
 const symlinkPath = './test/mockup/symlink-folder';
@@ -24,27 +24,27 @@ function normalizeStructPaths(obj, rootPath) {
 
 // Auto-detect mockup structure dynamically
 async function autoDetectMockup() {
-    return structFsRaw('./test/mockup/');
+    return struct('./test/mockup/');
 }
 
-describe('structFsRaw Function Tests', () => {
+describe('struct Function Tests', () => {
     it('Basic structure retrieval', async () => {
-        const struct = await structFsRaw('./test/mockup/');
+        const structData = await struct('./test/mockup/');
         const detectedMockup = await autoDetectMockup();
-        expect(normalizeStructPaths(struct, './test/mockup/')).toEqual(
+        expect(normalizeStructPaths(structData, './test/mockup/')).toEqual(
             normalizeStructPaths(detectedMockup, './test/mockup/'),
         );
     });
 
     it('Handles non-recursive mode (directories always have children)', async () => {
-        const struct = await structFsRaw('./test/mockup/', {
+        const structData = await struct('./test/mockup/', {
             recursive: false,
         });
 
-        expect(struct.children).toBeDefined();
-        expect(Array.isArray(struct.children)).toBe(true);
+        expect(structData.children).toBeDefined();
+        expect(Array.isArray(structData.children)).toBe(true);
 
-        struct.children.forEach((child) => {
+        structData.children.forEach((child) => {
             expect(child).toHaveProperty('path');
             expect(child).toHaveProperty('type');
             expect(child.type).toMatch(/^(d|f)$/); // Ensure type is 'd' (directory) or 'f' (file)
@@ -57,40 +57,40 @@ describe('structFsRaw Function Tests', () => {
     });
 
     it('Includes metadata when enabled', async () => {
-        const struct = await structFsRaw('./test/mockup/', {
+        const structData = await struct('./test/mockup/', {
             meta: true,
             recursive: true,
         });
-        expect(struct).toHaveProperty('created_at');
-        expect(struct).toHaveProperty('modified_at');
+        expect(structData).toHaveProperty('created_at');
+        expect(structData).toHaveProperty('modified_at');
 
-        struct.children.forEach((child) => {
+        structData.children.forEach((child) => {
             expect(child).toHaveProperty('created_at');
             expect(child).toHaveProperty('modified_at');
         });
     });
 
     it('Includes file sizes when enabled', async () => {
-        const struct = await structFsRaw('./test/mockup/', {
+        const structData = await struct('./test/mockup/', {
             size: true,
             recursive: true,
         });
 
-        struct.children.forEach((child) => {
+        structData.children.forEach((child) => {
             console.log(child.size);
-            console.log(struct);
+            console.log(structData);
             expect(typeof child.size).toBe('number');
         });
     });
 
     it('Handles symlinks correctly', async () => {
-        const struct = await structFsRaw(symlinkPath);
+        const structData = await struct(symlinkPath);
 
         if (fs.existsSync(symlinkPath)) {
-            expect(struct).toHaveProperty('symlink', true);
-            expect(struct).toHaveProperty('symlink_target');
-            expect(struct).toHaveProperty('symlink_resolved');
-            expect(struct).not.toHaveProperty('children'); // Ensure no recursion into symlink
+            expect(structData).toHaveProperty('symlink', true);
+            expect(structData).toHaveProperty('symlink_target');
+            expect(structData).toHaveProperty('symlink_resolved');
+            expect(structData).not.toHaveProperty('children'); // Ensure no recursion into symlink
         } else {
             console.warn('Skipping symlink test: Symlink was not created.');
         }
@@ -103,22 +103,22 @@ describe('structFsRaw Function Tests', () => {
         keymap.type = 't';
         keymap.symlink = 'sl';
 
-        const struct = await structFsRaw('./test/mockup/', { keys: keymap });
+        const structData = await struct('./test/mockup/', { keys: keymap });
 
-        expect(struct).toHaveProperty('p');
-        expect(struct).toHaveProperty('t');
-        expect(struct).toHaveProperty('sl');
+        expect(structData).toHaveProperty('p');
+        expect(structData).toHaveProperty('t');
+        expect(structData).toHaveProperty('sl');
 
-        struct.c.forEach((child) => {
+        structData.c.forEach((child) => {
             expect(child).toHaveProperty('p');
             expect(child).toHaveProperty('t');
         });
     });
 
     it('Removes unnecessary symlink data with prune', async () => {
-        const struct = await structFsRaw('./test/mockup/', { prune: true });
+        const structData = await struct('./test/mockup/', { prune: true });
 
-        struct.children.forEach((child) => {
+        structData.children.forEach((child) => {
             if (!child.symlink) {
                 expect(child).not.toHaveProperty('symlink_target');
                 expect(child).not.toHaveProperty('symlink_resolved');
@@ -127,15 +127,15 @@ describe('structFsRaw Function Tests', () => {
     });
 
     it('Detects symlinks correctly (even if the target does not exist)', async () => {
-        const struct = await structFsRaw({ dir: symlinkPath });
+        const structData = await struct({ dir: symlinkPath });
 
         if (fs.existsSync(symlinkPath)) {
-            expect(struct).toHaveProperty('symlink', true);
-            expect(struct).toHaveProperty(
+            expect(structData).toHaveProperty('symlink', true);
+            expect(structData).toHaveProperty(
                 'symlink_target',
                 path.resolve('D:\\nothing'),
             ); // Expected target
-            expect(struct).not.toHaveProperty('children'); // Ensure no recursion into symlink
+            expect(structData).not.toHaveProperty('children'); // Ensure no recursion into symlink
         } else {
             console.warn('Skipping symlink test: Symlink was not created.');
         }

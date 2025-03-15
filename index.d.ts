@@ -1,10 +1,3 @@
-/**
- * struct-fsraw Type Definitions
- *
- * @license Apache-2.0
- * @copyright 2015-2025 Alex Stevovich
- */
-
 export interface StructFsOptions {
     /** Include file creation and modification timestamps */
     meta?: boolean;
@@ -45,7 +38,7 @@ export interface FileStructure {
  * @param options Optional parameters to customize the scan.
  * @returns A promise that resolves to a structured representation of the directory.
  */
-export function structFsRaw(
+export function struct(
     dir: string,
     options?: StructFsOptions,
 ): Promise<FileStructure>;
@@ -55,4 +48,4 @@ export function structFsRaw(
  */
 export function getKeys(): Record<string, string>;
 
-export default structFsRaw;
+export default struct;

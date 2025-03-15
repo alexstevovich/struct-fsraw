@@ -27,11 +27,11 @@
  *
  * @system
  *
- * generated_on: 2025-03-14T23:19:04.490Z
+ * generated_on: 2025-03-15T02:26:35.619Z
  * certified_version: 1.0.0
  * file_uuid: 5eb475a8-731e-4363-a052-cefbfd2e23ea
- * file_size: 5129 bytes
- * file_hash: 375e24c6f9a419f2dc2aeeab37cb65f5009b6b1075afed85d9806cb7e6bea2be
+ * file_size: 5114 bytes
+ * file_hash: 276048f2fcd32d43f21643335b4499862eea47cf7ae0437c4e8775524830c21d
  * mast_hash: 249f825a123d38329cecb352dadd75bf0bbf20ede1008775768ab08b10c85fef
  * generated_by: preamble on npm!
  *
@@ -59,7 +59,7 @@ export function getKeys() {
     };
 }
 
-export async function structFsRaw(dir, options = {}, depth = 0) {
+export async function struct(dir, options = {}, depth = 0) {
     if (!dir) {
         throw new Error("The 'dir' parameter is required.");
     }
@@ -138,7 +138,7 @@ export async function structFsRaw(dir, options = {}, depth = 0) {
                     const childPath = path.join(dir, child);
 
                     if (recursive) {
-                        return structFsRaw(childPath, options, depth + 1);
+                        return struct(childPath, options, depth + 1);
                     }
 
                     // **Only include top-level files & directories, no recursion**
@@ -162,4 +162,4 @@ export async function structFsRaw(dir, options = {}, depth = 0) {
     return fileObject;
 }
 
-export default structFsRaw;
+export default struct;

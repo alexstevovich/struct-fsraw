@@ -27,11 +27,11 @@
  *  
  * @system
  *
- * generated_on: 2025-03-14T23:28:48.089Z
+ * generated_on: 2025-03-15T02:27:35.459Z
  * certified_version: 1.0.0
  * file_uuid: 5eb475a8-731e-4363-a052-cefbfd2e23ea
- * file_size: 5854 bytes
- * file_hash: c067008f3f8948730385e07f69ecffd2469e39981bb61691a73a1d7889ab6a6e
+ * file_size: 5824 bytes
+ * file_hash: d1f66daa4b08b68b679ae8781ed6445c9ffc8037415be1c709d3fb968dea0ae4
  * mast_hash: faa91525f9d26dee32c58ef01ef6cf56ea9e74b789814d7d7ffed582ced92fb4
  * generated_by: preamble on npm!
  *
@@ -68,7 +68,7 @@ var index_exports = {};
 __export(index_exports, {
   default: () => index_default,
   getKeys: () => getKeys,
-  structFsRaw: () => structFsRaw
+  struct: () => struct
 });
 module.exports = __toCommonJS(index_exports);
 var import_promises = __toESM(require("fs/promises"), 1);
@@ -90,7 +90,7 @@ function getKeys() {
     modified_at: "m_m"
   };
 }
-async function structFsRaw(dir, options = {}, depth = 0) {
+async function struct(dir, options = {}, depth = 0) {
   if (!dir) {
     throw new Error("The 'dir' parameter is required.");
   }
@@ -142,7 +142,7 @@ async function structFsRaw(dir, options = {}, depth = 0) {
         dirContents.map(async (child) => {
           const childPath = import_path.default.join(dir, child);
           if (recursive) {
-            return structFsRaw(childPath, options, depth + 1);
+            return struct(childPath, options, depth + 1);
           }
           const childStats = await import_promises.default.lstat(childPath);
           return {
@@ -158,9 +158,9 @@ async function structFsRaw(dir, options = {}, depth = 0) {
   }
   return fileObject;
 }
-var index_default = structFsRaw;
+var index_default = struct;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   getKeys,
-  structFsRaw
+  struct
 });

@@ -1,7 +1,7 @@
 {
     "name": "struct-fsraw",
     "version": "1.0.0",
-    "description": "Retrieves a structured representation of a directory, including file metadata, file size, symlinks.",
+    "description": "Creates a structured representation of a directory, including file metadata, file size, symlinks.",
     "type": "module",
     "main": "./gen/index.cjs",
     "exports": {
