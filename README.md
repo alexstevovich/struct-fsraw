@@ -1,5 +1,7 @@
 # struct-fsraw
 
+> **Archetype:** Node.js package
+
 Filesystem Structure Extraction for Node.js
 
 **Archtype**: Node.js package
@@ -97,7 +99,7 @@ Scans a directory and returns its structured representation.
 
 ### Development Homepage
 
-[https://github.com/alexstevovich/struct-fs](https://github.com/alexstevovich/struct-fs)
+[https://github.com/alexstevovich/struct-fsraw](https://github.com/alexstevovich/struct-fsraw)
 
 <sub>_This link might be suffixed with "-node" in the future if conflicts arise._</sub>
 
